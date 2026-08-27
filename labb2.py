@@ -21,3 +21,4 @@ print(färger)
 position_bort = int(input("Ge plats nummer till färg som du vill ta bort: "))
 färger.pop(position_bort)
 print(färger)
+array("i") = [1,2,3,4,5] #hur man skapar array
