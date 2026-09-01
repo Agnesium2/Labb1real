@@ -53,7 +53,7 @@ def main():
     kort = input("")
     kortlista = kort.split(" ")
     for kort in range(len(kortlista)):
-        nytt_q.enqueue(int(kortlista[kort]))
+        nytt_q.enqueue(kortlista[kort])
     output = ""
     for i in range(len(kortlista)): 
         temp = nytt_q.dequeue()
