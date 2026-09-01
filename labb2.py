@@ -1,4 +1,5 @@
-from arrayQFile import ArrayQ
+from linkedQFile import LinkedQ
+
 #from array import array
 # colors = ["Blue", "Red", "Purple"]
 # print(colors)
@@ -48,7 +49,7 @@ from arrayQFile import ArrayQ
 # else:
 #     print("FAILED")
 def main():
-    nytt_q = ArrayQ()
+    nytt_q = LinkedQ()
     kort = input("Ge 5 olika kort nummer:")
     kortlista = kort.split(",")
     for kort in range(len(kortlista)):
@@ -60,3 +61,4 @@ def main():
         print(nytt_q) 
         t = nytt_q.dequeue()
 main()
+      
