@@ -50,15 +50,18 @@ from linkedQFile import LinkedQ
 #     print("FAILED")
 def main():
     nytt_q = LinkedQ()
-    kort = input("Ge 5 olika kort nummer:")
-    kortlista = kort.split(",")
+    kort = input("")
+    kortlista = kort.split(" ")
     for kort in range(len(kortlista)):
         nytt_q.enqueue(int(kortlista[kort]))
-
+    output = ""
     for i in range(len(kortlista)): 
         temp = nytt_q.dequeue()
         nytt_q.enqueue(temp)
-        print(nytt_q) 
-        t = nytt_q.dequeue()
+        temp2 = nytt_q.dequeue()
+        output = output + str(temp2) + " "
+        
+
+
+    print(output)
 main()
-      
