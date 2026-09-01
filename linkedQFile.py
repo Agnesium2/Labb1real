@@ -1,9 +1,18 @@
 class Node:
-    def __init__(self, value, next = None):
+    def __init__(self, value):
         self.value = value
-        self.next = next
+        self.next = None
+
+    def set_next(self,next_node):
+            self.next=next_node
+
+    def get_next(self):
+         return self.next
+
     def __str__(self):
-        return self.value
+        return str(self.value)
+    
+    
 
 
 class LinkedQ:
@@ -11,8 +20,31 @@ class LinkedQ:
         self.__first = None
         self.__last = None
 
+    def is_empty(self):
+         return self.__first == None
+
     def enqueue(self, item):
-        self.__last.next = item
+        temp = Node(item)
+
+        if self.__first == None:
+             self.__first = temp
+             self.__last = temp
+
+        else:
+             self.__last.set_next(temp)
+             self.__last = temp
+        
     
     def dequeue(self):
-        self.__first = self.__first.next
+        if self.__first == None:
+             return None
+        else:
+            temp1 = self.__first
+            self.__first = self.__first.next
+            
+        if self.__first == None:
+            self.__last = None
+        return temp1.value
+    
+    def __str__(self):
+        return str(self.__first)
