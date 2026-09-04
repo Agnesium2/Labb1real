@@ -1,54 +1,3 @@
-# timetemplate.S
-# Written 2015 by F Lundevall
-# Ported 2024/06 by W Szczerek (from MIPS to RISC-V)
-# Copyright abandonded - this file is in the public domain.
-
-#############################################################
-# PUSH / POP macros.                                        #
-#                                                           #
-# RARS and the GNU assembler (used for the DTEK-V board)    #
-# use slightly different macro syntax. The file ships with  #
-# the RARS-style block active, because Assignments 1-4 are  #
-# done in RARS. When you port to the board in Assignment 5, #
-# comment out the RARS block below and uncomment the DTEK   #
-# block beneath it.                                         #
-#############################################################
-###################
-# Macros for RARS #
-###################
-.macro	PUSH (%reg)
-	addi	sp,sp,-4
-	sw	%reg,0(sp)
-.end_macro
-
-.macro	POP (%reg)
-	lw	%reg,0(sp)
-	addi	sp,sp,4
-.end_macro
-###################
-# Macros for DTEK #
-###################
-#.macro	PUSH reg
-#	addi sp,sp,-4
-#	sw \reg,0(sp)
-#.endm
-#
-#.macro	POP reg
-#	lw	\reg,0(sp)
-#	addi	sp,sp,4
-#.endm
-#############################################################
-
-	.data
-	.align 2
-mytime:	.word 	0x5957
-timstr:	.asciz 	"\0"
-	.text
-	# delay is declared global so the auto-grader's test harness (which
-	# calls delay directly from a small labmain.S) can resolve the symbol.
-	.globl timetemplate, tick, time2string, delay
-
-# Function for displaying a string with a newline at the end	
 display_string:	
 	li a7,4
 	ecall
@@ -62,7 +11,7 @@ timetemplate:
 	jal     display_string
 	
 	# wait a little
-	li	a0, 10000		# ms
+	li	a0, 2		# ms
 	jal	delay
 	
 	# call tick
@@ -163,15 +112,17 @@ time2string:
 	jr	ra
 	
 delay:
-	beqz	a0, return
-	addi	a0, a0, -1
-	li	t0, 0
-	li	t1, 0x4710
-	ble	t0, t1, forloop
-	j	delay
+	mv	t0, a0
+	
+whileloop:
+	blez	t0, return
+	li	t1, 0x4711	
 	
 forloop:
-	addi	t0, t0, 1
+	addi	t1, t1, -1
+	bnez	t1, forloop
+	addi	t0, t0, -1
+	j	whileloop
 	
 return:
 	jr	ra
